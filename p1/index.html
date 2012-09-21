@@ -1,0 +1,75 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<!--**************************************
+Dhairya Dalal
+Project 1 - CS E-75 Dynamic Web Applications
+Instructor: Susan Buck
+****************************************/
+-->
+<html>
+<head>
+<!-- Load JQuery Libraries and CSS. This page utilizes JQuery UI Effects.-->
+	<link rel="stylesheet" type="text/css" href="styles.css">
+	<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js" type="text/javascript"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js" type="text/javascript"></script>
+	<script src="http://ui.jquery.com/latest/ui/effects.core.js" type="text/javascript"></script>
+	<script src="http://ui.jquery.com/latest/ui/effects.slide.js" type="text/javascript"></script>
+<title>Dhairya Dalal - Project 1 - Dynamic Web Applications </title>	
+	
+</head>
+
+<body>
+<!-- JQuery Page Effects: Body fades in on load. Dhairya's bio pops up when Dhairya Dalal is clicked.   -->	
+	<script type="text/javascript">
+	$(document).ready(function() {
+	    $("body").css("display", "none");
+	    $("body").fadeIn(2000);
+	    $("a.transition").click(function(event){
+	        event.preventDefault();
+	        linkLocation = this.href;
+	        $("body").fadeOut(1000, redirectPage);      
+	    });
+	       
+	    function redirectPage() {
+	        window.location = linkLocation;
+	    }
+	});
+		
+	$(document).ready(function(){
+	  $("#popup").click(function(){
+		 $("#popup_box").show("explode", { pieces: 16 }, 1000);
+		$("#main_box").hide();
+		});
+	  
+	  $("#return").click(function(){
+		$("#popup_box").hide();
+		$("#main_box").show("drop", { direction: "down" }, 1000);
+		});
+	});
+	</script>
+
+<div id = "container">
+	<!--This popup div is hiddent by default. -->
+	<div id ="popup_box">
+		<div id ="inside_popup_box">
+		<img src = "images/me.jpg" width = "27%" class = "floatLeft" alt = "Dhairya Dalal image">
+		<h3>Dhairya Dalal</h3>
+		<strong>I am an IT Analyst </strong> in the Enterprise Technology Services group at Liberty Mutual Insurance. Currently, I live in Portsmouth, NH. <br > <br >
+		<strong>Originally, I was born in India, </strong> but grew up in Clifton, New Jersey. I graduated from the University of Rochester in 2010 with a double major in Creative Writing and Critical Foundations of Social and Political Thought. My thesis was on the Ontology of Nonviolence. I am passionate about working with nonprofits and using technology to solve social problems and build communities. Previously, I was board member for the M.K. Gandhi Institute for Nonviolence and web consultant for the National Peace Academy. These days I teach classes about zombie rights for TechChange and volunteer as crisis mapper for the Stand By Task Force. 
+		<a href = "#" id = "return"> Return</a>
+		</div>
+	</div>			
+	
+	<div id ="main_box">	
+		<h3><a href ="#" id ="popup" title  = "Click Me! I don't bite.">Dhairya Dalal</a></h3>	
+			Project 1<br >
+			Instructor: Susan Buck <br >
+			<b>CS E-75: </b> Dynamic Web Applications<br ><br >
+			This site was built using JQuery,CSS, and HTML 5. <br >
+			<b>Hosting</b>: A Small Orange, tiny plan <br>
+			<b>Code Editor:</b> <a href = "http://www.crimsoneditor.com/" target = "_blank">Crimson Editor </a>
+	</div>
+</div>
+</body>
+</html>
