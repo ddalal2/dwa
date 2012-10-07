@@ -465,7 +465,7 @@ class Form {
 	/*-------------------------------------------------------------------------------------------------
 	
 	-------------------------------------------------------------------------------------------------*/	
-	public function select_multiple($field, $options, $value = NULL, $html = NULL) {
+	public function select_multiple($field, $options, $value = Array(), $html = NULL) {
 		$value = (empty($this->data[$field])) ? $value : $this->data[$field];				
 		$input = '<select multiple="multiple" id="'.$field.'" name="'.$field.'" '.$html.'>'."\n";
 		foreach ((array) $options as $key => $val) {

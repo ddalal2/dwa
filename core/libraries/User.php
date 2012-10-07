@@ -49,11 +49,11 @@ class User {
 																			
 			# Configure user's avatar (if they're logged in)
 				if($this->_user) {
-					if(!$this->_user->avatar) 
+					if(@!$this->_user->avatar) 
 						$this->_user->avatar = PLACE_HOLDER_IMAGE;
 					else 
 						$this->_user->avatar = AVATAR_PATH.$this->_user->avatar;	
-									
+												
 					$this->_user->avatar_small  = Utils::postfix("_200_200", $this->_user->avatar);
 					$this->_user->avatar_medium = Utils::postfix("_600_400", $this->_user->avatar);
 				}
