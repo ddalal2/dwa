@@ -15,8 +15,7 @@
 </head>
 
 <body>	
-	Welcome to Conversio
-	<hr>	
+
 	<?=$content;?> 
 
 </body>

@@ -535,9 +535,9 @@ class Form {
 	}
 
 	
-	public function hidden($field, $value = NULL) {
+	public function hidden($field, $value = NULL, $html = NULL) {
 		$value = (empty($this->data[$field])) ? $value : $this->data[$field];
-		echo '<input type="hidden" name="'.$field.'" id="'.$field.'" value="'.$value.'" />';
+		echo '<input type="hidden" name="'.$field.'" id="'.$field.'" '.$html.' value="'.$value.'" />';
 	}
 	
 	
