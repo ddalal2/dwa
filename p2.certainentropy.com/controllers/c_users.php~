@@ -71,13 +71,10 @@ class users_controller extends base_controller {
 		}
 	}
 
-	public function login($error = NULL) {
+	public function login() {
 		#setup view
 		$this->template->content = View::instance('v_users_login');
 		$this->template->title = "Login";
-		
-		# Pass Error variable
-		$this->template->content->error = $error;
 
 		#Render template
 		echo $this->template;		
