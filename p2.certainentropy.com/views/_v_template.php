@@ -15,29 +15,35 @@
 </head>
 
 <body>	
-	Welcome to Conversio
-	<hr>	
-		<div id='menu'>
+		
+	<div class = "container">
+		<div id = "header" class = "span-24 last">
+			<img src = "/images/logo.jpg" alt="Convers.io - Conversation Engine">
+		</div>
+	<hr />
 	
-		<!-- Menu for users who are logged in -->
+	<div id='menu'>
+	<!-- Menu for users who are logged in -->
 		<? if($user): ?>
 			
-			<a href='/users/logout'>Logout</a>
-			<a href='/posts/users/'>Change who you're following</a>
-			<a href='/posts/'>View posts</a>
+			<a href='/users/logout'>Logout</a> |
+			<a href='/posts/users/'>Change who you're following</a> |
+ 			<a href='/posts/'>View posts</a> |
 			<a href='/posts/add'>Add a new post</a>
-		
-		<!-- Menu options for users who are not logged in -->	
+	<!-- Menu options for users who are not logged in -->	
 		<? else: ?>
-		
-			<a href='/users/signup'>Sign up</a>
+			<a href='/users/signup'>Sign up</a> |
 			<a href='/users/login'>Log in</a>
-		
 		<? endif; ?>
 	
 	</div>		
-	
+	<hr />
 	<?=$content;?> 
-
+	 
+	<div id = "footer" class = "span-24 last">
+	<hr />	
+			Site produced using Blueprint CSS and Kohana Framework. 
+	</div>
+	<hr />
 </body>
 </html>

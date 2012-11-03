@@ -1,0 +1,54 @@
+<html>
+<meta http-equiv="Content-type" content="text/html; charset=utf-8" /> 
+<title> Conversio</title>
+ <link rel="stylesheet" href="blueprint/screen.css" type="text/css" media="screen, projection" />  
+ <link rel="stylesheet" href="blueprint/print.css" type="text/css" media="print" />  
+ <!--[if IE]><link rel="stylesheet" href="blueprint/ie.css" type="text/css" media="screen, projection" /><![endif]-->  
+ 
+<link rel="stylesheet" href="blueprint/plugins/fancy-type/screen.css" type="text/css" media="screen, projection" />  
+<body>
+<div class = "container">
+		<div id = "header" class = "span-24 last">
+			<img src = "/images/logo.jpg" alt="Convers.io - Conversation Engine">
+		</div>
+		<hr />
+
+		<div class="span-6 colborder" id="sidebar">
+     	 <div id="signup">
+            <br />
+			<h3 class="caps">Login</h3>
+            <div class="box">
+				Login Stuff
+				</div>
+       </div>
+      </div>
+		
+		<div class="span-17 last" id="content">
+		Stuff goes here
+		<?=$content;?> 
+		<!-- Menu for users who are logged in -->
+		<? if($user): ?>
+			
+			<a href='/users/logout'>Logout</a>
+			<a href='/posts/users/'>Change who you're following</a>
+			<a href='/posts/'>View posts</a>
+			<a href='/posts/add'>Add a new post</a>
+		<!-- Menu options for users who are not logged in -->	
+		<? else: ?>
+			<a href='/users/signup'>Sign up</a>
+			<a href='/users/login'>Log in</a>
+		<? endif; ?>
+		
+		</div>		
+		
+		
+		<div id = "footer" class = "span-24 last">
+		<hr />
+			Site produced using Blueprint CSS and Kohana Framework. 
+		<hr />
+		</div>
+	</div>
+</body>
+
+
+</html>

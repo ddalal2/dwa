@@ -10,7 +10,15 @@ class users_controller extends base_controller {
 	}
 
 	public function signup() {
-		# Setup View
+		# Load CSS / JS
+		$client_files = Array(
+				"/blueprint/ie.css",
+				"/blueprint/print.css",
+				"/blueprint/screen.css",
+	            );
+	
+        $this->template->client_files = Utils::load_client_files($client_files);      			
+			# Setup View
 			$this->template->content = View::instance('v_users_signup');
 			$this->template->title = "Signup";
 			
@@ -67,11 +75,20 @@ class users_controller extends base_controller {
 			setcookie("token", $token, strtotime('+1 year'), '/');
 		
 		#send them to main page 
-		Router::redirect("/");
+		Router::redirect("/posts");
 		}
 	}
 
 	public function login($error = NULL) {
+		# Load CSS / JS
+		$client_files = Array(
+				"/blueprint/ie.css",
+				"/blueprint/print.css",
+				"/blueprint/screen.css",
+	            );
+	
+      $this->template->client_files = Utils::load_client_files($client_files);      			
+				
 		#setup view
 		$this->template->content = View::instance('v_users_login');
 		$this->template->title = "Login";
@@ -80,7 +97,8 @@ class users_controller extends base_controller {
 		$this->template->content->error = $error;
 
 		#Render template
-		echo $this->template;		
+		echo $this->template;	
+			
 	} 
 
 	public function logout() {

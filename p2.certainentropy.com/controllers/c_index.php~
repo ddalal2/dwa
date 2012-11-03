@@ -27,7 +27,7 @@ class index_controller extends base_controller {
 	
         $this->template->client_files = Utils::load_client_files($client_files);      
 	     
-	     $this->template->content->error = $error;      
+	     $this->template->error = $error;      
 
 		# Render the view
 			echo $this->template;

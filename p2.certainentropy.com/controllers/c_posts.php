@@ -13,11 +13,22 @@ class posts_controller extends base_controller {
 	}
 	
 	public function add() {
+		
+		# Load CSS / JS
+		$client_files = Array(
+				"/blueprint/ie.css",
+				"/blueprint/print.css",
+				"/blueprint/screen.css",
+	            );
 	
+        $this->template->client_files = Utils::load_client_files($client_files);      			
+			
+		
 		# Setup view
 		$this->template->content = View::instance('v_posts_add');
 		$this->template->title   = "Add a new post";
 			
+		
 		# Render template
 		echo $this->template;
 	
@@ -40,7 +51,16 @@ class posts_controller extends base_controller {
 	}
 	
 	public function index() {
-
+		# Load CSS / JS
+		$client_files = Array(
+				"/blueprint/ie.css",
+				"/blueprint/print.css",
+				"/blueprint/screen.css",
+	            );
+	
+        $this->template->client_files = Utils::load_client_files($client_files);      			
+		
+				
 		# Set up view
 		$this->template->content = View::instance('v_posts_index');
 		$this->template->title   = "Posts";
@@ -80,6 +100,16 @@ class posts_controller extends base_controller {
 	}
 	
 	public function users() {
+		# Load CSS / JS
+		$client_files = Array(
+				"/blueprint/ie.css",
+				"/blueprint/print.css",
+				"/blueprint/screen.css",
+	            );
+	
+        $this->template->client_files = Utils::load_client_files($client_files);      			
+				
+				
 		# Set up the view
 		$this->template->content = View::instance("v_posts_users");
 		$this->template->title   = "Users";

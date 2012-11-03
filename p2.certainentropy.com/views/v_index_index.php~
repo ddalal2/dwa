@@ -14,7 +14,7 @@
 		<br>
 	<? endif; ?>	
 	
-<input type = 'submit' value="Login!">
+<input type = 'submit' value="login!">
 </form>
 </fieldset>
 
