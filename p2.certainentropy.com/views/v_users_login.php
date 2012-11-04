@@ -5,7 +5,7 @@
 <h2 class = "alt">Login in to join conversation!</h2>
 <? if($error == 'error'): ?>
 		<div class="error">
-			Login failed. Please double check your email and password. Are you a new user? <a href ='/ users/signup' > Click here to signup.</a> 
+			Login failed. Please double check your email and password. Are you a new user? <a href ='/users/signup' > Click here to signup.</a> 
 		</div>
 		<br>
 <? endif; ?>

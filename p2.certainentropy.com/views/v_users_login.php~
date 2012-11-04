@@ -12,7 +12,7 @@
 <? if($error == 'login'): ?>
 		<div class="error">
 		Oops, you're not logged in. Please login to view member's area.<br />
-		Are you a new user? <a href ='/ users/signup' > Click here to signup.</a>  		
+		Are you a new user? <a href ='/users/signup' > Click here to signup.</a>  		
 		</div>
 		<br>
 <? endif; ?>	
