@@ -44,7 +44,7 @@ class users_controller extends base_controller {
 				WHERE email = '".$_POST['email']."'";
 		
 		$query = DB::instance(DB_NAME)->select_rows($q);
-		echo $query;
+		
 		#check if query return empty string. If string is empty, email does not exist in db.
 		if(!$query)
 		{
