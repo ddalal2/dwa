@@ -36,7 +36,7 @@ class users_controller extends base_controller {
 		
 		#Check if password field is empty
 		if(!$_POST['password'])
-			Router::redirect("/users/signup/empty");
+			Router::redirect("/users/signup/blank");
 				
 		#Check if user's email exists in users table
 		#Build query
