@@ -2,6 +2,7 @@
 
 <fieldset>
 <legend><h1 class="loud"> Welcome to Convers.io</h1></legend>
+<div style="float:left;">
 <h2>New user? <a href ='users/signup' >Click here to talk about kittens!</a></h2>
 <h2 class = "alt">Login in to join conversation! </h2>
 <form method = 'POST' action = '/users/p_login'>
@@ -13,8 +14,10 @@
 		</div>
 		<br>
 	<? endif; ?>	
+
 	
-<input type = 'submit' value="login!">
+<input type = 'submit' value="Login!">
+</div>
 </form>
 </fieldset>
 

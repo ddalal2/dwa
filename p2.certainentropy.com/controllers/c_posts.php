@@ -118,7 +118,27 @@ class posts_controller extends base_controller {
 		$this->template->title   = "Users";
 			
 		#pass error
-		$this->template->content->error = $error;						
+		$this->template->content->error = $error;		
+				
+		# Pass requested user, if variable is user id
+		$this->template->content->post_status = "empty";			
+		$this->template->content->posts = Array();
+		
+		$this->template->content->post_status = null;
+		if($error != "error" && $error != null){
+			$this->template->content->post_status = "empty";
+			# Build query to get posts
+			$q = "SELECT *
+			FROM posts
+			WHERE user_id = ".$error;
+			
+			$query = DB::instance(DB_NAME)->select_rows($q);
+			$this->template->content->posts = $query;		
+			
+			if(!$query)
+				$this->template->content->post_status = "blank";			
+		}
+		
 		
 		# Build our query to get all the users
 		$q = "SELECT *

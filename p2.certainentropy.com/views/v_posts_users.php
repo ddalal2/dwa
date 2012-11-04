@@ -1,5 +1,8 @@
-<form method='POST' action='/posts/p_follow'>
-	<? if($error): ?>
+<div id = "content" class = "span-24 last">
+<fieldset style="float:left; margin-right: 10px;">
+<legend>Users on Covers.io</legend>
+	<form method='POST' action='/posts/p_follow'>
+	<? if($error == 'error'): ?>
 		<div class='error'>
 		Oopsie Daisy. It takes two to have a conversation! Otherwise you're just talking to yourself and that's just plain weird.
 		<br />
@@ -11,7 +14,7 @@
 	<? foreach($users as $user): ?>
 	
 		<!-- Print this user's name -->
-		<?=$user['first_name']?> <?=$user['last_name']?>
+		<a href ='/posts/users/<?=$user['user_id']?>'><?=$user['first_name']?> <?=$user['last_name']?> </a> (<?=$user['email']?>)
 		
 		<!-- If there exists a connection with this user, show a unfollow link -->
 		<? if(isset($connections[$user['user_id']])): ?>
@@ -25,5 +28,34 @@
 		<br><br>
 	
 	<? endforeach; ?>
-	
-</form>
+	</form>
+</fieldset>
+<fieldset>
+<legend>User's recent posts</legend>
+		
+			
+		
+		<? if($post_status == null): ?>
+		<div class="notice">
+			<strong>No users selected. Select a user to see posts.</strong>
+		</div>
+		<br>
+		<? endif; ?>			
+		
+		<? if($post_status == 'blank'): ?>
+		<div class="notice">
+			<strong>User hasn't posted anything yet</strong>
+		</div>
+		<br>
+		<? endif; ?>
+		
+		<? $posts = array_reverse($posts); ?>		
+		<? foreach($posts as $post): ?>
+			<div class="box">
+			Posted: <? echo date('F j, Y, g:i a', $post['modified']);?>
+			<hr />
+			<h3 class="loud"><?=$post['content']?></h3>
+			</div>
+		<? endforeach; ?>
+</fieldset>
+</div>

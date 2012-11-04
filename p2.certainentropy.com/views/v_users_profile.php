@@ -27,7 +27,7 @@
 			<strong>Aww shucks, you've got nothing posted. Post a muse, share a yarn, tell a tale, or twitter about.</strong>
 		</div>
 		<br>
-<? endif; ?>
+		<? endif; ?>
 		<? $posts = array_reverse($posts); ?>		
 		<? foreach($posts as $post): ?>
 			<div class="box">
