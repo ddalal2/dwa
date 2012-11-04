@@ -12,7 +12,7 @@ class users_controller extends base_controller {
 		
 	}
 
-	public function signup() {
+	public function signup($error = null) {
 		# Load CSS / JS
 		$client_files = Array(
 				"/blueprint/ie.css",
@@ -25,26 +25,48 @@ class users_controller extends base_controller {
 			$this->template->content = View::instance('v_users_signup');
 			$this->template->title = "Signup";
 			
+			#pass error value
+			$this->template->content->error = $error;
+						
 			#Render Template
 				echo $this->template;		
 	}
 	
 	public function p_signup(){
-			
-		#Encrypt the password
-		$_POST['password'] = sha1(PASSWORD_SALT.$_POST['password']);		
-				
-		# Record User's timestamp and generate unique token for login
-		$_POST['created'] = Time::now();
-		$_POST['modified'] = Time::now();
-		$_POST['token'] = sha1(TOKEN_SALT.$_POST['email'].Utils::generate_random_string());		
-	
-		#Insert this user into the database
-		$user_id = DB::instance(DB_NAME)->insert("users",$_POST);
-		$users = DB::instance(DB_NAME)->select_rows("SELECT * FROM users");
 		
-		#Redirect usr to profile page
-		Router::redirect("/users/login/success");
+		#Check if password field is empty
+		if(!$_POST['password'])
+			Router::redirect("/users/signup/blank");
+				
+		#Check if user's email exists in users table
+		#Build query
+		$q = "SELECT * FROM users
+				WHERE email = '".$_POST['email']."'";
+		
+		$query = DB::instance(DB_NAME)->select_rows($q);
+		echo $query;
+		#check if query return empty string. If string is empty, email does not exist in db.
+		if(!$query)
+		{
+			#Encrypt the password
+			$_POST['password'] = sha1(PASSWORD_SALT.$_POST['password']);		
+				
+			# Record User's timestamp and generate unique token for login
+			$_POST['created'] = Time::now();
+			$_POST['modified'] = Time::now();
+			$_POST['token'] = sha1(TOKEN_SALT.$_POST['email'].Utils::generate_random_string());		
+	
+			#Insert this user into the database
+			$user_id = DB::instance(DB_NAME)->insert("users",$_POST);
+			$users = DB::instance(DB_NAME)->select_rows("SELECT * FROM users");
+		
+			#Redirect usr to profile page
+			Router::redirect("/users/login/success");
+		}
+		else{
+			Router::redirect("/users/signup/error");
+		}
+		
 	}
 	
 	public function p_login(){
@@ -151,7 +173,8 @@ class users_controller extends base_controller {
 		
 		# Execute our query, storing the results in a variable $connections
 		$connections = DB::instance(DB_NAME)->select_rows($q);
-		
+		if(!$connections)
+			$this->template->content->post_status = "empty";
 		$this->template->content->posts = $connections;
 				
 		#Render template

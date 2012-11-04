@@ -22,6 +22,12 @@
 	<fieldset>
 		<!--Reverse passed array in order to display posts from most recent to oldest-->
 		<legend><h2 class="loud">My Musings</h2></legend>
+		<? if($post_status == "empty"): ?>
+		<div class="notice">
+			<strong>Aww shucks, you've got nothing posted. Post a muse, share a yarn, tell a tale, or twitter about.</strong>
+		</div>
+		<br>
+<? endif; ?>
 		<? $posts = array_reverse($posts); ?>		
 		<? foreach($posts as $post): ?>
 			<div class="box">

@@ -7,7 +7,7 @@ class posts_controller extends base_controller {
 		
 		# Confirm User is logged in
 		if(!$this->user) {
-			die("Members only. <a href='/users/login'>Login</a>");
+			Router::redirect("users/login/login");
 		}
 		
 	}

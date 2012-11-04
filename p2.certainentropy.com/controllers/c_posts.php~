@@ -49,43 +49,7 @@ class posts_controller extends base_controller {
 	
 	}
 	
-	public function pull_posts(){
-		# Build a query of the users this user is following - we're only interested in their posts
-		$q = "SELECT * 
-				FROM users_users
-				WHERE user_id = ".$this->user->user_id;
 	
-		# Execute our query, storing the results in a variable $connections
-		$connections = DB::instance(DB_NAME)->select_rows($q);
-		
-		if(!$connections){
-			Router::redirect("/posts/users/error");	
-		}	
-		else{
-			# Generate string of user ids, the user is following 
-				$connections_string = "";
-			foreach($connections as $connection) {
-				$connections_string .= $connection['user_id_followed'].",";
-			}
-	
-			# Remove the final comma 
-			$connections_string = substr($connections_string, 0, -1);
-	
-			$q = "SELECT * 
-				FROM posts 
-				JOIN users USING (user_id)
-				WHERE posts.user_id IN (".$connections_string.")"; # This is where we use that string of user_ids we created
-
-			# Run our query, store the results in the variable $posts
-			$posts = DB::instance(DB_NAME)->select_rows($q);
-	
-			# Pass data to the view
-			$this->template->content->posts = $posts;
-	
-			# Render view
-			echo $this->template;
-		}
-	}	
 	
 	public function index() {
 		# Load CSS / JS
@@ -206,7 +170,5 @@ class posts_controller extends base_controller {
 		# Send them back
 		Router::redirect("/posts/users");
 
-	}
-	
-	
+	}		
 }
