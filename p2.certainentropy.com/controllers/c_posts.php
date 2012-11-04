@@ -178,7 +178,7 @@ class posts_controller extends base_controller {
 		DB::instance(DB_NAME)->insert('users_users', $data);
 
 		# Route back to user list
-		Router::redirect("/posts/users");
+		Router::redirect("/posts/users/".$user_id_followed);
 	}	
 
 	public function unfollow($user_id_followed) {
@@ -188,7 +188,7 @@ class posts_controller extends base_controller {
 		DB::instance(DB_NAME)->delete('users_users', $where_condition);
 	
 		# Send them back
-		Router::redirect("/posts/users");
+		Router::redirect("/posts/users/".$user_id_followed);
 
 	}		
 }

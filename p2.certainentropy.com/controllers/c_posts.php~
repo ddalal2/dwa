@@ -126,7 +126,7 @@ class posts_controller extends base_controller {
 		
 		$this->template->content->post_status = null;
 		if($error != "error" && $error != null){
-			$this->template->content->post_status = null;
+			$this->template->content->post_status = "empty";
 			# Build query to get posts
 			$q = "SELECT *
 			FROM posts
