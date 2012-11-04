@@ -18,8 +18,7 @@ class posts_controller extends base_controller {
 		$client_files = Array(
 				"/blueprint/ie.css",
 				"/blueprint/print.css",
-				"/blueprint/screen.css",
-	            );
+				"/blueprint/screen.css");
 	
         $this->template->client_files = Utils::load_client_files($client_files);      			
 			
@@ -46,19 +45,56 @@ class posts_controller extends base_controller {
 		# Insert
 		DB::instance(DB_NAME)->insert('posts', $_POST);
 		
-		echo "Your post has been added. <a href='/posts/add'>Add another?</a>";
+		Router::redirect("/users/profile/sucess");
 	
 	}
+	
+	public function pull_posts(){
+		# Build a query of the users this user is following - we're only interested in their posts
+		$q = "SELECT * 
+				FROM users_users
+				WHERE user_id = ".$this->user->user_id;
+	
+		# Execute our query, storing the results in a variable $connections
+		$connections = DB::instance(DB_NAME)->select_rows($q);
+		
+		if(!$connections){
+			Router::redirect("/posts/users/error");	
+		}	
+		else{
+			# Generate string of user ids, the user is following 
+				$connections_string = "";
+			foreach($connections as $connection) {
+				$connections_string .= $connection['user_id_followed'].",";
+			}
+	
+			# Remove the final comma 
+			$connections_string = substr($connections_string, 0, -1);
+	
+			$q = "SELECT * 
+				FROM posts 
+				JOIN users USING (user_id)
+				WHERE posts.user_id IN (".$connections_string.")"; # This is where we use that string of user_ids we created
+
+			# Run our query, store the results in the variable $posts
+			$posts = DB::instance(DB_NAME)->select_rows($q);
+	
+			# Pass data to the view
+			$this->template->content->posts = $posts;
+	
+			# Render view
+			echo $this->template;
+		}
+	}	
 	
 	public function index() {
 		# Load CSS / JS
 		$client_files = Array(
 				"/blueprint/ie.css",
 				"/blueprint/print.css",
-				"/blueprint/screen.css",
-	            );
+				"/blueprint/screen.css");
 	
-        $this->template->client_files = Utils::load_client_files($client_files);      			
+       $this->template->client_files = Utils::load_client_files($client_files);      			
 		
 				
 		# Set up view
@@ -72,38 +108,54 @@ class posts_controller extends base_controller {
 	
 		# Execute our query, storing the results in a variable $connections
 		$connections = DB::instance(DB_NAME)->select_rows($q);
-	
-		# Generate string of user ids, the user is following 
-		$connections_string = "";
-		foreach($connections as $connection) {
-			$connections_string .= $connection['user_id_followed'].",";
-		}
-	
-		# Remove the final comma 
-		$connections_string = substr($connections_string, 0, -1);
-	
 		
-		# Now, lets build our query to grab the posts
-		$q = "SELECT * 
+		if(!$connections){
+			Router::redirect("/posts/users/error");	
+		}	
+		else{
+			# Generate string of user ids, the user is following 
+				$connections_string = "";
+			foreach($connections as $connection) {
+				$connections_string .= $connection['user_id_followed'].",";
+			}
+	
+			# Remove the final comma 
+			$connections_string = substr($connections_string, 0, -1);
+	
+			$q = "SELECT * 
 				FROM posts 
 				JOIN users USING (user_id)
 				WHERE posts.user_id IN (".$connections_string.")"; # This is where we use that string of user_ids we created
 
-		# Run our query, store the results in the variable $posts
-		$posts = DB::instance(DB_NAME)->select_rows($q);
+			# Run our query, store the results in the variable $posts
+			$posts = DB::instance(DB_NAME)->select_rows($q);
 	
-		# Pass data to the view
-		$this->template->content->posts = $posts;
+			# Pass data to the view
+			$this->template->content->posts = $posts;
 	
-		# Render view
-		echo $this->template;
+			# Render view
+			echo $this->template;
+		}
 	}
 	
-	public function users() {
+	public function users($error = null) {
+		# Load CSS / JS
+		$client_files = Array(
+				"/blueprint/ie.css",
+				"/blueprint/print.css",
+				"/blueprint/screen.css",
+	            );
+	
+      $this->template->client_files = Utils::load_client_files($client_files);      			
+		
+						
 		# Set up the view
 		$this->template->content = View::instance("v_posts_users");
 		$this->template->title   = "Users";
-
+			
+		#pass error
+		$this->template->content->error = $error;						
+		
 		# Build our query to get all the users
 		$q = "SELECT *
 			FROM users";

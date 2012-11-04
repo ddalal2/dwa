@@ -1,4 +1,5 @@
 <?php
+
 class users_controller extends base_controller {
 
 	public function __construct() {
@@ -6,7 +7,9 @@ class users_controller extends base_controller {
 	} 
 
 	public function index() {
-		echo "Welcome to the users's department";
+		
+		Router::redirect("/users/profile");
+		
 	}
 
 	public function signup() {
@@ -27,9 +30,7 @@ class users_controller extends base_controller {
 	}
 	
 	public function p_signup(){
-		# Dump out the results of POST to see what the form submitted
-		print_r($_POST);		
-		
+			
 		#Encrypt the password
 		$_POST['password'] = sha1(PASSWORD_SALT.$_POST['password']);		
 				
@@ -40,12 +41,10 @@ class users_controller extends base_controller {
 	
 		#Insert this user into the database
 		$user_id = DB::instance(DB_NAME)->insert("users",$_POST);
-		
-		
 		$users = DB::instance(DB_NAME)->select_rows("SELECT * FROM users");
-		#For now, confirm signup
-		echo "<br>Congrats! You've signed up<br> Here is a data dump: <br>";		
-		print_r($users);
+		
+		#Redirect usr to profile page
+		Router::redirect("/users/login/success");
 	}
 	
 	public function p_login(){
@@ -74,8 +73,8 @@ class users_controller extends base_controller {
 			# store token in cookie
 			setcookie("token", $token, strtotime('+1 year'), '/');
 		
-		#send them to main page 
-		Router::redirect("/posts");
+			#send them to main page 
+			Router::redirect("/users/profile");
 		}
 	}
 
@@ -121,17 +120,40 @@ class users_controller extends base_controller {
 
 }
 
-	public function profile() {
+	public function profile($post_status = null) {
+		# Load CSS / JS
+		$client_files = Array(
+				"/blueprint/ie.css",
+				"/blueprint/print.css",
+				"/blueprint/screen.css");
+	
+       $this->template->client_files = Utils::load_client_files($client_files);      			
+				
+		
 		# If user is blank, alert user they are not logged in
 		if(!$this->user){
-			echo "Members only. <a href= '/users/login'> Login <a/>";
-			return false;		
+			Router::redirect("/users/login/login");
 		}
+				
 		
 		# Setup View
 		$this->template->content = View::instance('v_users_profile');
 		$this->template->title = "Profile of".$this->user->first_name;
 		
+		#Pass Post Status		
+		$this->template->content->post_status = $post_status;		
+		
+		# Pull User's Posts
+		# Build a query of the users this user is following - we're only interested in their posts
+		$q = "SELECT * 
+				FROM posts
+				WHERE user_id = ".$this->user->user_id;
+		
+		# Execute our query, storing the results in a variable $connections
+		$connections = DB::instance(DB_NAME)->select_rows($q);
+		
+		$this->template->content->posts = $connections;
+				
 		#Render template
 		echo $this->template;
 	}

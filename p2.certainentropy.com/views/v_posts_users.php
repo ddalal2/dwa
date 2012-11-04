@@ -1,5 +1,13 @@
 <form method='POST' action='/posts/p_follow'>
-		
+	<? if($error): ?>
+		<div class='error'>
+		Oopsie Daisy. It takes two to have a conversation! Otherwise you're just talking to yourself and that's just plain weird.
+		<br />
+		<strong class = "loud">Please follow a user or conversation below.</strong> 
+		</div>
+		<br>
+	<? endif; ?>		
+	
 	<? foreach($users as $user): ?>
 	
 		<!-- Print this user's name -->

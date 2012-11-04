@@ -20,7 +20,6 @@
 </fieldset>
 
 	<fieldset>
-		<!--Reverse passed array in order to display posts from most recent to oldest-->
 		<legend><h2 class="loud">My Musings</h2></legend>
 		<? $posts = array_reverse($posts); ?>		
 		<? foreach($posts as $post): ?>
