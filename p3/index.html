@@ -121,15 +121,46 @@
 	
 	<script type='text/javascript'>
 
-        $('document').ready(function() { // start doc ready; do not delete this!        
+        // Define API key for Sunlight Labs API calls
+		// API documentation can be found here: http://services.sunlightlabs.com/
+		var apikey = "apikey=d9fb3679b63e40e88be90a468b08ab4c";
+		$('document').ready(function() { 
                 
-                $('#state_list').click(function() {        
-                       
+               //Listen for user selecting state in 
+			   $('#state_list').click(function() {   
+					 
+					 //Collect state from user click
+                      var state = "state=" + $(this).val();
+					  
+					$.ajax({
+						url: 'http://services.sunlightlabs.com/api/legislators.getList.json?'+apikey+'&'+ state,
+						dataType: 'jsonp',
+						cache: true,
+						jsonp: 'jsonp',
+						success: function(data) {
+							
+							console.log(data.response.legislators[0].legislator.chamber);
+							
+						}
+
+					});
+
+					//Call AP
+					 //$.getJSON("http://services.sunlightlabs.com/api/legislators.getList.json?" + apikey + "&" + state + "&jsonp=my_callback", function(json) {
+					//	console.log(json);
+
+				//	 });
+					  
+					  
+					  
+				
                 });
 				
 				
+				
+				
         
-        }); // end doc ready
+        }); 
         
 </script>
 	
