@@ -33,16 +33,11 @@
 <fieldset>
 <legend>User's recent posts</legend>
 		
-		<? if($post_status == 'empty'): ?>
-		<div class="notice">
-			<strong>No users select. Select a user to see posts.</strong>
-		</div>
-		<br>
-		<? endif; ?>		
+			
 		
 		<? if($post_status == null): ?>
 		<div class="notice">
-			<strong>No users select. Select a user to see posts.</strong>
+			<strong>No users selected. Select a user to see posts.</strong>
 		</div>
 		<br>
 		<? endif; ?>			
@@ -57,7 +52,7 @@
 		<? $posts = array_reverse($posts); ?>		
 		<? foreach($posts as $post): ?>
 			<div class="box">
-			Posted: <? echo date('F j, Y, g:i a', $post['modified']);?>
+			<?=$post['first_name']?> Posted: <? echo date('F j, Y, g:i a', $post['modified']);?>
 			<hr />
 			<h3 class="loud"><?=$post['content']?></h3>
 			</div>
