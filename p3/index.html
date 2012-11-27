@@ -7,7 +7,7 @@
 	<!--[if IE]><link rel="stylesheet" href="blueprint/ie.css" type="text/css" media="screen, projection" /><![endif]-->  
 	<link rel="stylesheet" href="blueprint/plugins/fancy-type/screen.css" type="text/css" media="screen, projection" />  
 	<script src="http://code.jquery.com/jquery-latest.js"></script>	
-	
+	<script src="congress.js"></script>
 	
 </head>	
 <body>
@@ -82,22 +82,13 @@
 					</fieldset>
 				</div>
 				
-				<div id="zip_search">
-				<fieldset>
-					<legend>Search by Zipcode</legend>
-					<table>
-						<tr>
-							<td>Enter Zip</td>
-							<td>&nbsp;<input name = "zip" id = "zip"></td>
-					</tr>
-					</table>
-					</fieldset>
-				</div>
 				
-				<div id="zip_search">
+				
+				<div>
 				<fieldset>
 					<legend>Results</legend>
-					
+					<div id="results">
+					</div>
 					</fieldset>
 				</div>
 				
@@ -105,64 +96,25 @@
 			</div>
 			
 		</div>
-		
+		<br>
 		<div class="span-13 last" id="content">
-		;lk;lk;l
+		<div id="display_content" class = "box">
+		<h3>Congress Finder</h3>
+		<p>Welcome to Congress Finder. Select a state from the drop down menu on the left to locate the Congressperson that represents your state. Click on the name of the representative for additional details. </p>
+		<p>
+		</div>
 		
 		</div>		
 		
 		
 		<div class = "span-24 last">
 		<hr />
-			Site produced using Blueprint CSS and Kohana Framework. 
+			<center>Dhairya Dalal - CS75 - Site produced using Blueprint CSS and Kohana Framework. </center>
 		
 		</div>
 	</div>
 	
-	<script type='text/javascript'>
-
-        // Define API key for Sunlight Labs API calls
-		// API documentation can be found here: http://services.sunlightlabs.com/
-		var apikey = "apikey=d9fb3679b63e40e88be90a468b08ab4c";
-		$('document').ready(function() { 
-                
-               //Listen for user selecting state in 
-			   $('#state_list').click(function() {   
-					 
-					 //Collect state from user click
-                      var state = "state=" + $(this).val();
-					  
-					$.ajax({
-						url: 'http://services.sunlightlabs.com/api/legislators.getList.json?'+apikey+'&'+ state,
-						dataType: 'jsonp',
-						cache: true,
-						jsonp: 'jsonp',
-						success: function(data) {
-							
-							console.log(data.response.legislators[0].legislator.chamber);
-							
-						}
-
-					});
-
-					//Call AP
-					 //$.getJSON("http://services.sunlightlabs.com/api/legislators.getList.json?" + apikey + "&" + state + "&jsonp=my_callback", function(json) {
-					//	console.log(json);
-
-				//	 });
-					  
-					  
-					  
-				
-                });
-				
-				
-				
-				
-        
-        }); 
-        
-</script>
+	
 	
 </body>
 
