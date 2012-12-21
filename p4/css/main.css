@@ -1,0 +1,19 @@
+
+.ui-autocomplete {
+    background-color: white;
+	width:250px;
+	border: 1px solid #cfcfcf;
+    list-style-type: none;
+    padding-left: 0px;
+}
+
+.navbar{
+text-align:right;
+background-color: 006699;
+color: white;
+width: 100%;
+
+}
+.navbar a:link {color:white;}     
+.navbar a:visited {color:white;}
+

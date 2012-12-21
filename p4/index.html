@@ -1,19 +1,129 @@
+
 <html>
-<body>
-<h1> P4: Project Proposal </h1>
-<strong>Dhairya Dalal</strong>
-<h2>Project Title: Tweet-Suite: Social Media Dashboard </h2>
-<h2> Description </h2>
-<p>For project 4, I am going to create a simple social media dashboard that will allow the user to their Twitter account and mine Twitter for social data. Through the dashboard the user will be able to schedule tweets, generate custom feeds to monitor hashtags and users, generate simple reports on the user's social influence.</p>
-<p>The goal is create a small utility that I scale to support additional social media sites like Facebook, Tumblr, Formspring, and Instagram. While many free and commerical solutions exist, currently none on the market are targetted for nonprofits. My hope is to make this site accessible and useful for nonprofits looking to develop a social media strategy. </p>
-<strong> Resources </strong>
-There are several social media dashboards. Below is small list of existing tools:
-<ul> 
-<li><a href="http://hootsuite.com/">Hootsuite</a></li>
-<li><a href ="http://www.tweetdeck.com/">TweetDeck</a></li>
-<li><a href="http://paper.li/">Paper.li</a></li>
-</ul>
-
-
-</body>
+  <head>
+    <title>Geo-Tweet</title>
+    <!--Style Sheets-->  
+		<link type="text/css" href="css/main.css" rel="stylesheet" />
+		<link type="text/css" href="css/jquery-ui-1.9.2.custom.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="blueprint/screen.css" type="text/css" media="screen, projection" />  
+		<link rel="stylesheet" href="blueprint/print.css" type="text/css" media="print" />
+		<link rel="stylesheet" href="css/twit-stream.css" />
+	<!--[if IE]><link rel="stylesheet" href="blueprint/ie.css" type="text/css" media="screen, projection" /><![endif]-->  
+	<link rel="stylesheet" href="blueprint/plugins/fancy-type/screen.css" type="text/css" media="screen, projection" />  
+			
+	<!--JQuery--> 
+		<script type="text/javascript" src="js/jquery-1.8.3.js"></script>
+		<script type="text/javascript" src="js/jquery-ui-1.9.2.custom.min.js"></script>
+   <!--Javascript--> 
+	`   <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+		<script type="text/javascript" src="js/geocoder.js"></script>
+		<script type="text/javascript" src="js/twitStream.js"></script>
+	<script type="text/javascript">
+		showTweetLinks='view';
+	</script>
+	</head>
+	
+  </head>
+  
+  <body>
+  
+  <div class = "container">
+	<!--Header-->  
+    <div class = "span-24 last" style = "border:solid;  background-color: #66FF66; margin-bottom:10px">
+		<img src = "images/header.gif" />
+			
+		
+	</div>
+	<!--Twitter Feeds-->  
+	<fieldset>
+	<div id = "moniter" class = "span-24 last">
+	<div class = "box"><center><h2>Welcome to #Geo-Search</h2></center>
+	
+	#Geo-Search enables you to generate custom search feeds to monitor live tweets. To get started, search for a hashtag, @twitter handle, or generic search tearm in Search area. #Geo-Search only supports 3 feeds at a time. You can remove existing feeds at any time by clicking remove
+	<br>
+	<br>
+	#Geo-Search also supports search for geo-tagged tweets and location based searching. To conduct a geo-search, navigate to the the Geo-Search section. Enter your search query, the location and radius and select search.
+	</div>
+	
+	</div>
+	</fieldset>
+	<br/>
+	<hr />
+	
+	<fieldset>
+	<!--Simple  Search-->  
+	<div class = "span-7 colborder" style= "float:left">
+	<fieldset>
+	
+		<div id = "search ">
+			Search tweets in real time. Click to add column.
+			<br />
+			Search Query: <input id="query"  type="text"/> 
+			<br>
+			<strong>Number of Tweets:</strong> <select id="tweet_count" name="tweet_count">
+					  <option value="5" selected="selected">5 </option>
+					  <option value="10">10</option>
+					  <option value="20">20</option>
+					  <option value="50">50 </option>
+					  <option value="100">100</option>
+					</select>
+			<br/>
+		<input type = "submit" value = " Search" id ="simple_search">
+		<br/>Twitter supports the following advanced search options:
+		<ul>
+			<li><strong>Hashtag (#)</strong>: e.g. "#cats"</li>
+			<li><strong>Twitter Handles (@)</strong>: e.g. "@ladygaga"</li>
+			<li><strong>Boolean AND</strong>: e.g. "#cats AND #dogs"</li>
+			<li><strong>Boolean OR</strong>: e.g. "#cats OR #dogs"</li>
+		</ul>
+		</div>
+	</fieldset>
+	</div>
+	
+	<!--Google Map Canvas-->  
+	<div id = "map" class="span-8 colborder" style="float:left">
+		<div id="map_canvas" style="width: 300px; height:280px; border:solid"></div><br/>
+	</div>
+	
+	<fieldset>
+	<legend><h3> Geo-search </h3></legend>
+	
+		<div id = "geo_search" class="span-5">
+			Search Query: <input id="geo_query"  type="text"/>
+			<br />	
+			<strong>Location:</strong>
+			<input id="address"  type="text"/>
+			<br />
+		<strong>Within the Radius of:</strong> <select id="radius" name="radius">
+				  <option value="10mi">10 miles</option>
+				  <option value="25mi">25 miles</option>
+				  <option value="50mi">50 miles</option>
+				  <option value="100mi">100 miles</option>
+				  <option value="250mi">250 miles</option>
+				</select>
+		<br />
+		<strong>Number of Tweets:</strong> <select id="tweet_count_g" name="tweet_count_g">
+              <option value="5" selected="selected">5 </option>
+              <option value="10">10</option>
+              <option value="20">20</option>
+			  <option value="50">50 </option>
+			  <option value="100">100</option>
+            </select>
+		<br/>
+		<input type = "submit" value = " Search" id ="geo_submit">
+		<input id="latitude" type="hidden"/>
+		<input id="longitude" type="hidden"/>
+		</div>
+	</fieldset>
+	
+	
+	<div class = "span-24 last">
+		<hr />
+			<center>Dhairya Dalal - CS75 - Site produced using Blueprint CSS, JQuery, JQuery UI, TwitStream Plugin, and Google Maps. - <a href = "proposal.html">Proposal</a></center>
+		
+	</div>
+	</div>
+	
+	
+	</body>
 </html>
