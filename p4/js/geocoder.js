@@ -135,6 +135,8 @@ var geocode ="&geocode=" +lat + "," + lon + ","+radius;
 			
 };
 
+
+
 function remove(col){
 	var div_name = "#display_" + col;
 	$(div_name).remove();
