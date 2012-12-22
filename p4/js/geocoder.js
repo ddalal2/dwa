@@ -2,6 +2,7 @@ var geocoder;
 var map;
 var marker;
 var col_counter = 0;
+var position = new Array();
 var style = "style = 'float:left'";
  
  
@@ -33,10 +34,16 @@ $(document).ready(function() {
   $('#simple_search').click(function(){
 			var query = $('#query').val();
 			var tweet_count = $('#tweet_count').val();
-			if(col_counter < 3)
+			
+			if(query == "")
+				alert("Please enter a search query to generate a Twitter Feed.");
+			else
 			{
-				col_counter++;
-				generate_feed(query, col_counter, tweet_count);
+				if(col_counter < 3)
+				{
+					col_counter++;
+					generate_feed(query, col_counter, tweet_count);
+				}
 			}
 	});
 	
@@ -46,27 +53,21 @@ $(document).ready(function() {
 			var query_g = $('#geo_query').val();
 			var tweet_count_g = $('#tweet_count_g').val();
 			var radius = $('#radius').val();
-			var longlat = $('#latitude').val() + "," + $('#longitude').val();
-			var geocode ="&geocode=" +longlat+ ","+radius;
+			var lat = $('#latitude').val();
+			var lon = $('#longitude').val();
 			
-			if(col_counter < 2)
+			if(query_g == "")
+				alert("Please enter a search query to generate a Geo-Search Feed.");
+			else if (lat == "")
+				alert("Please enter a location for the Geo-Search.");
+			else
 			{
-				$('#moniter').append('<div class="twitStream '+ tweet_count_g +'" '+style+ 'id="display_'+col_counter+'" title="'+query_g+'"><div class = "navbar"><a href = "#" onclick="remove('+col_counter+');">Remove</a></div>Query:  '+ query_g+ ' within '+radius+' of: <br> Latitude:'+$('#latitude').val() + "<br>Longitude:" + $('#longitude').val()+' <hr/></div> ');	
+				if(col_counter < 3)
+				{
+					col_counter++;
+					generate_geofeed(query_g, col_counter, tweet_count, lat, lon, radius);
+				}
 			}
-			if (col_counter == 2)
-			{
-				$('#moniter').append('<div class="twitStream '+ tweet_count_g+'" id="display_'+col_counter+'" title="'+query_g+'"><div class = "navbar"><a href = "#" onclick="remove('+col_counter+');">Remove</a></div>Query:  '+ query_g+' within '+radius+' of: <br> Latitude:'+$('#latitude').val() + "<br>Longitude:" + $('#longitude').val()+'<hr/></div>');
-			}
-			
-			$('.twitStream').each(function(){
-				fetch_tweets(this,geocode);
-			});
-			col_counter++;
-			if (col_counter > 3)
-			{
-				alert("Error");
-			}
-			
 		
 	});
 	
@@ -114,11 +115,25 @@ function generate_feed(query, col_counter, tweet_count){
 	});
 };
 
-function generate_geofeed(query, col_counter, tweet_count, geocode){
-	
+function generate_geofeed(query_g, col_counter, tweet_count, lat, lon, radius){
 
+var geocode ="&geocode=" +lat + "," + lon + ","+radius;
+			
+						
+			if(col_counter < 3)
+			{
+				$('#moniter').append('<div class="twitStream '+ tweet_count_g +'" '+style+ 'id="display_'+col_counter+'" title="'+query_g+'"><div class = "navbar"><a href = "#" onclick="remove('+col_counter+');">Remove</a></div>Query:  '+ query_g+ ' within '+radius+' of: <br> Latitude:'+lat + "<br>Longitude:" + lon +' <hr/></div> ');	
+			}
+			if (col_counter == 3)
+			{
+				$('#moniter').append('<div class="twitStream '+ tweet_count_g+'" id="display_'+col_counter+'" title="'+query_g+'"><div class = "navbar"><a href = "#" onclick="remove('+col_counter+');">Remove</a></div>Query:  '+ query_g+' within '+radius+' of: <br> Latitude:'+ lat + "<br>Longitude:" +lon+'<hr/></div>');
+			}
+			
+			$('.twitStream').each(function(){
+				fetch_tweets(this,geocode);
+			});
+			
 };
-
 
 function remove(col){
 	var div_name = "#display_" + col;
